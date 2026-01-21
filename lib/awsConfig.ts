@@ -19,7 +19,7 @@ export async function getApiKey(): Promise<string> {
   // Fetch from AWS Systems Manager Parameter Store
   console.log('☁️ Fetching API key from AWS Parameter Store...');
   try {
-    const client = new SSMClient({ region: process.env.AWS_REGION || 'us-east-1' });
+    const client = new SSMClient({ region: process.env.WEATHER_APP_REGION || process.env.AWS_REGION || 'us-east-1' });
     const command = new GetParameterCommand({
       Name: '/weather-app/openweather-api-key',
       WithDecryption: true,
