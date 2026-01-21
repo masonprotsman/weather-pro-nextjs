@@ -1,10 +1,12 @@
 import { WeatherData, ForecastData, CitySearchResult } from '@/types/weather';
+import { getApiKey } from './awsConfig';
 
-const API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const GEO_URL = "https://api.openweathermap.org/geo/1.0";
 
 export async function getCurrentWeather(city: string): Promise<WeatherData> {
+  const API_KEY = await getApiKey();
+  
   try {
     const response = await fetch(
       `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`,
@@ -37,6 +39,8 @@ export async function getCurrentWeather(city: string): Promise<WeatherData> {
 }
 
 export async function getCurrentWeatherByCoords(lat: number, lon: number): Promise<WeatherData> {
+  const API_KEY = await getApiKey();
+  
   try {
     const response = await fetch(
       `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
@@ -67,6 +71,8 @@ export async function getCurrentWeatherByCoords(lat: number, lon: number): Promi
 }
 
 export async function getWeatherForecast(city: string): Promise<ForecastData> {
+  const API_KEY = await getApiKey();
+  
   try {
     const response = await fetch(
       `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`,
@@ -93,6 +99,8 @@ export async function getWeatherForecast(city: string): Promise<ForecastData> {
 }
 
 export async function getWeatherForecastByCoords(lat: number, lon: number): Promise<ForecastData> {
+  const API_KEY = await getApiKey();
+  
   try {
     const response = await fetch(
       `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
@@ -118,6 +126,8 @@ export async function getWeatherForecastByCoords(lat: number, lon: number): Prom
 }
 
 export async function searchCities(query: string): Promise<CitySearchResult[]> {
+  const API_KEY = await getApiKey();
+  
   try {
     const response = await fetch(
       `${GEO_URL}/direct?q=${query}&limit=5&appid=${API_KEY}`,

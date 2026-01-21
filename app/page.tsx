@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import SearchBar from '@/components/SearchBar';
 import TemperatureToggle from '@/components/TemperatureToggle';
 import WeatherCard from '@/components/WeatherCard';
@@ -10,7 +10,7 @@ import ErrorMessage from '@/components/ErrorMessage';
 import { WeatherData, ForecastData, TemperatureUnit } from '@/types/weather';
 import { useSearchParams } from 'next/navigation';
 
-export default function Home() {
+function WeatherContent() {
   const searchParams = useSearchParams();
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
@@ -149,5 +149,17 @@ export default function Home() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    }>
+      <WeatherContent />
+    </Suspense>
   );
 }
